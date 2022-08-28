@@ -1,9 +1,9 @@
 class PlatformEntity {
   final int id;
-  final String alternativeName;
+  late String alternativeName;
   final int category;
   final int createdAt;
-  final String name;
+  late String name;
   final int platformLogo;
 
   PlatformEntity(
@@ -13,4 +13,10 @@ class PlatformEntity {
       required this.createdAt,
       required this.name,
       required this.platformLogo});
+
+  setLogica() {
+    if (name.toLowerCase() == "Xbox".toLowerCase()) {
+      alternativeName = "microsoft";
+    }
+  }
 }

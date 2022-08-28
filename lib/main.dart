@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:game_catalog/home_page.dart';
 import 'package:game_catalog/model.dart';
+import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -13,9 +15,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final gameModel = GameModel();
+    final dio = Dio();
+    final customDio = CustomDio(dio);
+
     return MultiProvider(
       providers: [
-        Provider<GameModel>(create: (_) => GameModel()),
+        Provider<GameModel>(create: (_) => gameModel),
+        Provider<Dio>(create: (_) => dio),
+        Provider<CustomDio>(create: (_) => customDio),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

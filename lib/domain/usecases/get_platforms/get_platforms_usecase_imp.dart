@@ -9,6 +9,11 @@ class GetPlatformsUsecaseImp implements GetPlatformsUsecase {
 
   @override
   PlatformEntity call() {
+    final repository = _getPlatformsRepository();
+    if (repository.name == '') {
+      repository.name = 'Unknown';
+      return repository;
+    }
     return _getPlatformsRepository();
   }
 }
