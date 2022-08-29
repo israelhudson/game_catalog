@@ -41,9 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
           debugPrint('Local ${game.hashCode}');
 
           try {
-            final customDio = Provider.of<CustomDio>(context);
+            final customDio = Provider.of<CustomDio>(context, listen: false);
             //customDio.i.
-            var response = await context.watch<CustomDio>().i.post('companies',
+            var response = await customDio.i.post('companies',
                 data:
                     '''-d 'fields change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;' \
 ''');
