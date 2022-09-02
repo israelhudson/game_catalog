@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 class MockGetPlatformsRepository extends Mock
     implements GetPlatformsRepository {}
 
-class MockGetPlatformsUsecase extends Mock implements GetPlatformsUsecaseImp {}
+class MockGetPlatformsUsecase extends Mock implements GetPlatformsUseCaseImp {}
 
 main() {
   // late GetPlatformsRepository repository;
@@ -21,14 +21,14 @@ main() {
   // });
   test('Deve retornar uma instancia de Platform', () {
     GetPlatformsRepository repository = GetPlatformsRepositoryImp();
-    GetPlatformsUsecase useCase = GetPlatformsUsecaseImp(repository);
+    GetPlatformsUseCase useCase = GetPlatformsUseCaseImp(repository);
     var result = useCase();
     expect(result, isInstanceOf<PlatformEntity>());
   });
 
   test('Deve retornar uma Unknown name', () {
     GetPlatformsRepository repository = GetPlatformsRepositoryImp();
-    GetPlatformsUsecase useCase = GetPlatformsUsecaseImp(repository);
+    GetPlatformsUseCase useCase = GetPlatformsUseCaseImp(repository);
 
     var result = useCase();
     expect(result.name, 'Unknown');

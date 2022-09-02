@@ -5,11 +5,8 @@ class GetPlatformsRepositoryImp implements GetPlatformsRepository {
   @override
   PlatformEntity call() {
     return PlatformEntity(
-        id: 1,
-        alternativeName: 'Xbox',
-        category: 1,
-        createdAt: 1,
-        name: '',
-        platformLogo: 1);
+      id: 1,
+      name: '',
+    );
   }
 }

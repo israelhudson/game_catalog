@@ -1,22 +1,18 @@
-class PlatformEntity {
-  final int id;
-  late String alternativeName;
-  final int category;
-  final int createdAt;
-  late String name;
-  final int platformLogo;
+import 'package:equatable/equatable.dart';
 
-  PlatformEntity(
-      {required this.id,
-      required this.alternativeName,
-      required this.category,
-      required this.createdAt,
-      required this.name,
-      required this.platformLogo});
+class PlatformEntity extends Equatable {
+  final int id;
+  late String name;
+
+  PlatformEntity({required this.id, required this.name});
 
   setLogica() {
     if (name.toLowerCase() == "Xbox".toLowerCase()) {
-      alternativeName = "microsoft";
+      name = "microsoft";
     }
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, name];
 }

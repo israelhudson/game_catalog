@@ -1,5 +1,5 @@
 import 'package:game_catalog/domain/entities/platform_entity.dart';
 
-abstract class GetPlatformsUsecase {
+abstract class GetPlatformsUseCase {
   PlatformEntity call();
 }
