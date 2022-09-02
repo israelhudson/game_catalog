@@ -4,14 +4,14 @@ import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'game_service_datasource.dart';
 
 class GameServiceDatasourceImp implements GameServiceDatasource {
-  final CustomDio client;
+  final CustomDio _client;
 
-  GameServiceDatasourceImp({required this.client});
+  GameServiceDatasourceImp({required CustomDio client}) : _client = client;
 
   @override
   Future<List<GameDto>> getGamesByPlatform({required int idPlatform}) async {
     try {
-      final response = await client.i.post(
+      final response = await _client.i.post(
         'games',
         data: '''
               fields id, name, platforms, summary, screenshots.url, genres.name, platforms.name;

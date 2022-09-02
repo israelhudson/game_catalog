@@ -8,12 +8,11 @@ class GetPlatformsUseCaseImp implements GetPlatformsUseCase {
   GetPlatformsUseCaseImp(this._getPlatformsRepository);
 
   @override
-  PlatformEntity call() {
-    final repository = _getPlatformsRepository();
-    if (repository.name == '') {
-      repository.name = 'Unknown';
-      return repository;
+  Future<List<PlatformEntity>> call() async {
+    final repository = await _getPlatformsRepository();
+    if (repository.isEmpty) {
+      return [];
     }
-    return _getPlatformsRepository();
+    return repository;
   }
 }

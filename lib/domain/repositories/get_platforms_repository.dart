@@ -1,5 +1,5 @@
 import '../entities/platform_entity.dart';
 
 abstract class GetPlatformsRepository {
-  PlatformEntity call();
+  Future<List<PlatformEntity>> call();
 }

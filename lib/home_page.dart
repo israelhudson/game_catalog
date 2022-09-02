@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:game_catalog/data/datasources/game_service_datasource/game_service_datasource_imp.dart';
 import 'package:game_catalog/model.dart';
 import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
 
+import 'data/datasources/platform_service_datasource/platform_service_datasource.dart';
 import 'data/dtos/platform_dto.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -53,10 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            Image.network(
-              headers: headersMap,
-              "https://api.igdb.com//images.igdb.com/igdb/image/upload/t_thumb/pu4oyg.jpg",
-            ),
             FutureBuilder<List<PlatformDto>>(
 //           future: customDio.i.post('companies',
 //               data:
@@ -103,13 +99,18 @@ class _MyHomePageState extends State<MyHomePage> {
 //                 data:
 //                     '''fields alpha_channel,animated,checksum,height,image_id,url,width;' \
 // ''');
-            GameServiceDatasourceImp gameServiceDatasourceImp =
-                GameServiceDatasourceImp(client: customDio);
+//             GameServiceDatasourceImp gameServiceDatasourceImp =
+//                 GameServiceDatasourceImp(client: customDio);
+//
+//             var response = await gameServiceDatasourceImp.getGamesByPlatform(
+//                 idPlatform: 11);
 
-            var response = await gameServiceDatasourceImp.getGamesByPlatform(
-                idPlatform: 11);
+            PlatformServiceDataSource platformServiceDataSource =
+                PlatformServiceDataSource(client: customDio);
 
-            print(response);
+            var response2 = await platformServiceDataSource.getPlatforms();
+
+            print(response2);
           } catch (e) {
             print(e);
           }
