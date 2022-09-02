@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:game_catalog/data/datasources/game_service_datasource/game_service_datasource_imp.dart';
 import 'package:game_catalog/model.dart';
 import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
@@ -93,15 +94,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
           try {
             final customDio = Provider.of<CustomDio>(context, listen: false);
-            //customDio.i.
-//             var response = await customDio.i.post('companies',
+//             //customDio.i.
+// //             var response = await customDio.i.post('companies',
+// //                 data:
+// //                     '''-d 'fields change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;' \
+// // ''');
+//             var response = await customDio.i.post('game_engine_logos',
 //                 data:
-//                     '''-d 'fields change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;' \
+//                     '''fields alpha_channel,animated,checksum,height,image_id,url,width;' \
 // ''');
-            var response = await customDio.i.post('game_engine_logos',
-                data:
-                    '''fields alpha_channel,animated,checksum,height,image_id,url,width;' \
-''');
+            GameServiceDatasourceImp gameServiceDatasourceImp =
+                GameServiceDatasourceImp(client: customDio);
+
+            var response = await gameServiceDatasourceImp.getGamesByPlatform(
+                idPlatform: 11);
+
             print(response);
           } catch (e) {
             print(e);

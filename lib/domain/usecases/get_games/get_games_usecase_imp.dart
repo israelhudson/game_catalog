@@ -11,7 +11,7 @@ class GetGamesUseCaseImp implements GetGamesUseCase {
   Future<List<GameEntity>> call({
     required int idPlatform,
   }) async {
-    final repository = await _getGamesRepository(
+    final repository = await _getGamesRepository.getGamesByPlatform(
       idPlatform: idPlatform,
     );
     if (repository.isEmpty) {
