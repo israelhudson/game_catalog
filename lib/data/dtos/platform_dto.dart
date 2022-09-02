@@ -34,7 +34,7 @@ class PlatformDto extends PlatformEntity {
     };
   }
 
-  PlatformDto fromMap(Map<String, dynamic> map) {
+  factory PlatformDto.fromMap(Map<String, dynamic> map) {
     return PlatformDto(
       idPlatform: map['id'],
       alternativeNamePlatform: map['alternativeName'],
