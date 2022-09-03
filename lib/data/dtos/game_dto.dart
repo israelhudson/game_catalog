@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:game_catalog/domain/entities/game_entity.dart';
+import 'package:game_catalog/shared/utils/utils.dart';
 
 class GameDto extends GameEntity {
   const GameDto(
@@ -42,14 +43,16 @@ class GameDto extends GameEntity {
 
   factory GameDto.fromMap(Map<String, dynamic> map) {
     return GameDto(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'],
       name: map['name'] ?? '',
       description: map['description'] ?? '',
-      imageUrl: map['imageUrl'] ?? '',
+      imageUrl: map['screenshots'] != null
+          ? GameDtoUtils.getImage(map['screenshots'] as List<dynamic>)
+          : '',
       genres: map['genres'] != null
-          ? List<String?>.from(map['genres']?.map((x) => GameDto.fromMap(x)))
+          ? GameDtoUtils.getGenres(map['genres'] as List<dynamic>)
           : null,
-      platforms: List<String?>.from(map['platforms']),
+      platforms: GameDtoUtils.getPlatforms(map['platforms'] as List<dynamic>),
     );
   }
 

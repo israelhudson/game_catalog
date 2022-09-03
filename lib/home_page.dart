@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:game_catalog/model.dart';
+import 'package:game_catalog/domain/entities/game_entity.dart';
+import 'package:game_catalog/home_controller.dart';
 import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
 
-import 'data/datasources/platform_service_datasource/platform_service_datasource.dart';
+import 'data/datasources/platform_service_datasource/platform_server_datasource_imp.dart';
 import 'data/dtos/platform_dto.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -38,56 +39,49 @@ Future<List<PlatformDto>> loadData(BuildContext context) async {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<GameModel>(context);
     final customDio = Provider.of<CustomDio>(context, listen: false);
-    Map<String, String> headersMap = {
-      "Client-ID": "6s26alivw3doh75e5td9gtrhfg1kww",
-      "Authorization": "Bearer rxd7d75ip2t1wu55xt3eo8b7yi8nr3",
-      "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept",
-      'method': 'GET'
-    };
+    final controller = Provider.of<HomeController>(context, listen: false);
+
+    // GameServerDatasourceImp gameServiceDatasourceImp =
+    //     GameServerDatasourceImp(client: customDio);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          children: [
-            FutureBuilder<List<PlatformDto>>(
+        child: FutureBuilder<List<GameEntity>>(
 //           future: customDio.i.post('companies',
 //               data:
 //                   '''-d 'fields change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;' \
 // '''),
-              future: loadData(context),
-              builder: (context, AsyncSnapshot<List<PlatformDto>> snapshot) {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        // render the list
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, index) => Card(
-                          margin: const EdgeInsets.all(10),
-                          // render list item
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(10),
-                            title: Text(snapshot.data![index].name),
-                          ),
-                        ),
-                      )
-                    : const Center(
-                        // render the loading indicator
-                        child: CircularProgressIndicator(),
-                      );
-              },
-            ),
-          ],
+          future: controller.getGamesByPlatform(idPlatform: 11),
+          builder: (context, AsyncSnapshot<List<GameEntity>> snapshot) {
+            if (snapshot.error != null) {
+              return Text('Error: ${snapshot.error} ');
+            }
+
+            return snapshot.hasData
+                ? ListView.builder(
+                    // render the list
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, index) => Card(
+                      margin: const EdgeInsets.all(10),
+                      // render list item
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(10),
+                        title: Text(snapshot.data![index].name),
+                      ),
+                    ),
+                  )
+                : const Center(
+                    // render the loading indicator
+                    child: CircularProgressIndicator(),
+                  );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final game = GameModel();
-          debugPrint('Inject ${model.hashCode}');
-          debugPrint('Local ${game.hashCode}');
-
           try {
             final customDio = Provider.of<CustomDio>(context, listen: false);
 //             //customDio.i.
@@ -105,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
 //             var response = await gameServiceDatasourceImp.getGamesByPlatform(
 //                 idPlatform: 11);
 
-            PlatformServiceDataSource platformServiceDataSource =
-                PlatformServiceDataSource(client: customDio);
+            PlatformServerDataSource platformServiceDataSource =
+                PlatformServerDataSource(client: customDio);
 
             var response2 = await platformServiceDataSource.getPlatforms();
 

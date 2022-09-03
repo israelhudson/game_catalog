@@ -9,7 +9,7 @@ class GetPlatformsUseCaseImp implements GetPlatformsUseCase {
 
   @override
   Future<List<PlatformEntity>> call() async {
-    final repository = await _getPlatformsRepository();
+    final repository = await _getPlatformsRepository.getPlatforms();
     if (repository.isEmpty) {
       return [];
     }
