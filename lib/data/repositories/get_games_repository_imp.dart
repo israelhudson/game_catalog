@@ -1,16 +1,15 @@
-import 'package:game_catalog/domain/entities/game_entity.dart';
+import 'package:game_catalog/data/datasources/game_service_datasource/game_server_datasource_imp.dart';
+import 'package:game_catalog/data/dtos/game_dto.dart';
 
 import '../../domain/repositories/get_games_repository.dart';
-import '../datasources/game_service_datasource/game_server_datasource.dart';
 
 class GetGamesRepositoryImp implements GetGamesRepository {
-  final GameServerDatasource gameServerDataSource;
+  final GameServerDatasourceImp gameServerDataSource;
 
   GetGamesRepositoryImp(this.gameServerDataSource);
 
   @override
-  Future<List<GameEntity>> getGamesByPlatform({required int idPlatform}) {
-    // TODO: implement getGamesByPlatform
-    throw UnimplementedError();
+  Future<List<GameDto>> getGamesByPlatform({required int idPlatform}) {
+    return gameServerDataSource.getGamesByPlatform(idPlatform: idPlatform);
   }
 }

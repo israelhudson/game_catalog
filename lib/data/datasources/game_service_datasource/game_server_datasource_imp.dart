@@ -16,7 +16,7 @@ class GameServerDatasourceImp implements GameServerDatasource {
         data: '''
               fields id, name, platforms, summary, screenshots.url, genres.name, platforms.name;
               where platforms = $idPlatform;
-              limit 500;
+              limit 5;
               ''',
       );
 

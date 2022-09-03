@@ -3,13 +3,12 @@ import 'package:game_catalog/domain/entities/platform_entity.dart';
 import 'package:game_catalog/domain/repositories/get_platforms_repository.dart';
 
 class GetPlatformsRepositoryImp implements GetPlatformsRepository {
-  final PlatformServerDataSource platformServerDataSource;
+  final PlatformServerDataSourceImp platformServerDataSource;
 
   GetPlatformsRepositoryImp(this.platformServerDataSource);
 
   @override
-  Future<List<PlatformEntity>> getPlatforms() {
-    final platforms = <PlatformEntity>[];
-    return Future.value(platforms);
+  Future<List<PlatformEntity>> getPlatforms() async {
+    return await platformServerDataSource.getPlatforms();
   }
 }

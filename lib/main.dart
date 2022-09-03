@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'data/repositories/get_platforms_repository_imp.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
+
   runApp(const MyApp());
 }
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
     final customDio = CustomDio(dio);
     final gameServerDatasourceImp = GameServerDatasourceImp(client: customDio);
     final platformServerDatasourceImp =
-        PlatformServerDataSource(client: customDio);
+        PlatformServerDataSourceImp(client: customDio);
     final getGamesRepositoryImp =
         GetGamesRepositoryImp(gameServerDatasourceImp);
     final getPlatformsRepositoryImp =
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         Provider<CustomDio>(create: (_) => customDio),
         Provider<GameServerDatasourceImp>(
             create: (_) => gameServerDatasourceImp),
-        Provider<PlatformServerDataSource>(
+        Provider<PlatformServerDataSourceImp>(
             create: (_) => platformServerDatasourceImp),
         Provider<GetGamesRepositoryImp>(create: (_) => getGamesRepositoryImp),
         Provider<GetPlatformsRepositoryImp>(
