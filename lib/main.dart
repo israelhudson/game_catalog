@@ -9,6 +9,7 @@ import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repositories/get_platforms_repository_imp.dart';
+import 'game_bloc/game_page_bloc.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         GetPlatformsRepositoryImp(platformServerDatasourceImp);
     final homeController =
         HomeController(getGamesRepositoryImp, getPlatformsRepositoryImp);
+    final gamePageBloc = GamePageBloc(getGamesRepositoryImp);
     return MultiProvider(
       providers: [
         Provider<CustomDio>(create: (_) => customDio),
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
         Provider<GetPlatformsRepositoryImp>(
             create: (_) => getPlatformsRepositoryImp),
         Provider<HomeController>(create: (_) => homeController),
+        Provider<GamePageBloc>(create: (_) => gamePageBloc),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

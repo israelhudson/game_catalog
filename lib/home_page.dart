@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:game_catalog/data/dtos/game_dto.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
+import 'package:game_catalog/game_bloc/game_event.dart';
+import 'package:game_catalog/game_bloc/game_page_bloc.dart';
+import 'package:game_catalog/game_bloc/game_state.dart';
 import 'package:provider/provider.dart';
 
 import 'home_controller.dart';
@@ -14,12 +18,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late GamePageBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = GamePageBloc(context.read<GetGamesRepositoryImp>())
+      ..add(ListGamesEvent(idPlatform: PlatformEnum.values.first.idPlatform));
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: BlocBuilder<GamePageBloc, GameState>(
+          bloc: bloc,
+          builder: (context, state) {
+            return Text('Games Catalog ${bloc.currentGame}');
+          },
+        ),
+        //title: Text('Games Catalog'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -38,55 +63,43 @@ class _MyHomePageState extends State<MyHomePage> {
                         child:
                             Chip(label: Text(PlatformEnum.values[index].name)),
                         onTap: () {
-                          controller.setPlatform(
+                          bloc.add(ListGamesEvent(
                               idPlatform:
-                                  PlatformEnum.values[index].idPlatform);
+                                  PlatformEnum.values[index].idPlatform));
                         });
                   },
                 ),
               ),
               Expanded(
                 flex: 10,
-                child: AnimatedBuilder(
-                    animation: controller,
-                    builder: (_, __) {
-                      return FutureBuilder<List<GameDto>>(
-                        future: controller.getGamesByPlatform(
-                            idPlatform: controller.currentPlatform),
-                        builder:
-                            (context, AsyncSnapshot<List<GameDto>> snapshot) {
-                          if (snapshot.error != null) {
-                            return Text('Error: ${snapshot.error} ');
-                          }
-
-                          return snapshot.hasData
-                              ? GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200,
-                                          childAspectRatio: 3 / 3,
-                                          crossAxisSpacing: 20,
-                                          mainAxisSpacing: 20),
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (BuildContext context, index) =>
-                                      Card(
-                                    margin: const EdgeInsets.all(10),
-                                    // render list item
-                                    child: ListTile(
-                                      contentPadding: const EdgeInsets.all(10),
-                                      title: Image.network(
-                                          'http:${snapshot.data![index].imageUrl!}'),
-                                      subtitle:
-                                          Text(snapshot.data![index].name),
-                                    ),
+                child: BlocBuilder<GamePageBloc, GameState>(
+                    bloc: bloc,
+                    builder: (context, state) {
+                      if (state is GameInitialState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is LoadedState) {
+                        final clientsList = state.list;
+                        return GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    childAspectRatio: 3 / 3,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20),
+                            itemCount: clientsList.length,
+                            itemBuilder: (BuildContext context, index) => Card(
+                                  margin: const EdgeInsets.all(10),
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    title: Image.network(
+                                        'http:${clientsList[index].imageUrl!}'),
+                                    subtitle: Text(clientsList[index].name),
                                   ),
-                                )
-                              : const Center(
-                                  // render the loading indicator
-                                  child: CircularProgressIndicator(),
-                                );
-                        },
-                      );
+                                ));
+                      }
+                      return Container();
                     }),
               )
             ],
