@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
 import 'package:game_catalog/domain/entities/game_entity.dart';
 
-import 'data/dtos/game_dto.dart';
-import 'data/repositories/get_platforms_repository_imp.dart';
-import 'domain/entities/platform_entity.dart';
+import '../../../data/dtos/game_dto.dart';
+import '../../../data/repositories/get_platforms_repository_imp.dart';
+import '../../../domain/entities/platform_entity.dart';
 
 class HomeController extends ChangeNotifier {
   final GetGamesRepositoryImp _getGamesRepositoryImp;

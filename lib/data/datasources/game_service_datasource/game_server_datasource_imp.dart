@@ -1,5 +1,5 @@
+import 'package:game_catalog/core/config/auth/custom/custom_dio.dart';
 import 'package:game_catalog/data/dtos/game_dto.dart';
-import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 
 import 'game_server_datasource.dart';
 

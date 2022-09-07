@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:game_catalog/core/utils/game_dto_util.dart';
 import 'package:game_catalog/domain/entities/game_entity.dart';
-import 'package:game_catalog/shared/utils/utils.dart';
 
 class GameDto extends GameEntity {
   const GameDto(

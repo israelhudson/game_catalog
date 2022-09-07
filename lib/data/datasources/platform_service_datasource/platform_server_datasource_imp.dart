@@ -1,6 +1,6 @@
+import 'package:game_catalog/core/config/auth/custom/custom_dio.dart';
 import 'package:game_catalog/data/datasources/platform_service_datasource/platform_server_datasource.dart';
 import 'package:game_catalog/data/dtos/platform_dto.dart';
-import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 
 class PlatformServerDataSourceImp implements PlatformServerDatasource {
   final CustomDio _client;

@@ -14,8 +14,8 @@ class HomePageLoadedState extends HomePageState {
 
 class EmptyState extends HomePageState {}
 
-class Error extends HomePageState {
-  Error({
+class HomePageError extends HomePageState {
+  HomePageError({
     required this.message,
   });
   final String message;

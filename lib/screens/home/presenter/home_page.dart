@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
-import 'package:game_catalog/home_controller.dart';
-import 'package:game_catalog/screens/home/game_bloc/home_page_bloc.dart';
-import 'package:game_catalog/screens/home/game_bloc/home_page_event.dart';
-import 'package:game_catalog/screens/home/game_bloc/home_page_state.dart';
+import 'package:game_catalog/screens/home/bloc/home_controller.dart';
+import 'package:game_catalog/screens/home/bloc/home_page_bloc.dart';
+import 'package:game_catalog/screens/home/bloc/home_page_event.dart';
+import 'package:game_catalog/screens/home/bloc/home_page_state.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -82,6 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (state is HomePageLoadingState) {
                         return const Center(
                           child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is HomePageError) {
+                        return const Center(
+                          child: Text('Error'),
+                        );
+                      }
+                      if (state is EmptyState) {
+                        return const Center(
+                          child: Text('nada'),
                         );
                       } else if (state is HomePageLoadedState) {
                         final clientsList = state.list;
