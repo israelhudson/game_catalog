@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
 import 'package:game_catalog/home_controller.dart';
-import 'package:game_catalog/screens/home/game_bloc/game_event.dart';
-import 'package:game_catalog/screens/home/game_bloc/game_page_bloc.dart';
-import 'package:game_catalog/screens/home/game_bloc/game_state.dart';
+import 'package:game_catalog/screens/home/game_bloc/home_page_bloc.dart';
+import 'package:game_catalog/screens/home/game_bloc/home_page_event.dart';
+import 'package:game_catalog/screens/home/game_bloc/home_page_state.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     bloc = GamePageBloc(context.read<GetGamesRepositoryImp>())
-      ..add(ListGamesEvent(idPlatform: PlatformEnum.values.first.idPlatform));
+      ..add(HomePageEvent(idPlatform: PlatformEnum.values.first.idPlatform));
   }
 
   @override
@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final controller = Provider.of<HomeController>(context);
     return Scaffold(
       appBar: AppBar(
-        title: BlocBuilder<GamePageBloc, GameState>(
+        title: BlocBuilder<GamePageBloc, HomePageState>(
           bloc: bloc,
           builder: (context, state) {
             return Text('Games Catalog ${bloc.currentGame}');
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child:
                             Chip(label: Text(PlatformEnum.values[index].name)),
                         onTap: () {
-                          bloc.add(ListGamesEvent(
+                          bloc.add(HomePageEvent(
                               idPlatform:
                                   PlatformEnum.values[index].idPlatform));
                         });
@@ -71,19 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Expanded(
                 flex: 10,
-                child: BlocBuilder<GamePageBloc, GameState>(
+                child: BlocBuilder<GamePageBloc, HomePageState>(
                     bloc: bloc,
                     builder: (context, state) {
-                      if (state is GameInitialState) {
+                      if (state is HomePageInitialState) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (state is LoadingState) {
+                      if (state is HomePageLoadingState) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is LoadedState) {
+                      } else if (state is HomePageLoadedState) {
                         final clientsList = state.list;
                         return GridView.builder(
                             gridDelegate:

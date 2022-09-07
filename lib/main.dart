@@ -4,7 +4,7 @@ import 'package:game_catalog/data/datasources/game_service_datasource/game_serve
 import 'package:game_catalog/data/datasources/platform_service_datasource/platform_server_datasource_imp.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
 import 'package:game_catalog/home_controller.dart';
-import 'package:game_catalog/screens/home/game_bloc/game_page_bloc.dart';
+import 'package:game_catalog/screens/home/game_bloc/home_page_bloc.dart';
 import 'package:game_catalog/screens/home/presenter/home_page.dart';
 import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

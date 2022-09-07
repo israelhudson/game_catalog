@@ -1,7 +1,7 @@
 abstract class GameEvent {}
 
-class ListGamesEvent extends GameEvent {
-  ListGamesEvent({
+class HomePageEvent extends GameEvent {
+  HomePageEvent({
     required this.idPlatform,
   });
 
