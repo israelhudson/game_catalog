@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
-import 'package:game_catalog/game_bloc/game_event.dart';
-import 'package:game_catalog/game_bloc/game_page_bloc.dart';
-import 'package:game_catalog/game_bloc/game_state.dart';
+import 'package:game_catalog/home_controller.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_event.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_page_bloc.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_state.dart';
 import 'package:provider/provider.dart';
-
-import 'home_controller.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -76,6 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     bloc: bloc,
                     builder: (context, state) {
                       if (state is GameInitialState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is LoadingState) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

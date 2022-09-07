@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
-import 'package:game_catalog/game_bloc/game_event.dart';
-import 'package:game_catalog/game_bloc/game_state.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_event.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_state.dart';
 
 class GamePageBloc extends Bloc<GameEvent, GameState> {
   final GetGamesRepositoryImp _getGamesRepositoryImp;

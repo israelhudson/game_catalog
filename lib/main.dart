@@ -4,12 +4,12 @@ import 'package:game_catalog/data/datasources/game_service_datasource/game_serve
 import 'package:game_catalog/data/datasources/platform_service_datasource/platform_server_datasource_imp.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
 import 'package:game_catalog/home_controller.dart';
-import 'package:game_catalog/home_page.dart';
+import 'package:game_catalog/screens/home/game_bloc/game_page_bloc.dart';
+import 'package:game_catalog/screens/home/presenter/home_page.dart';
 import 'package:game_catalog/shared/config/auth/custom/custom_dio.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repositories/get_platforms_repository_imp.dart';
-import 'game_bloc/game_page_bloc.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
