@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_catalog/core/config/theme/theme_config.dart';
 import 'package:game_catalog/data/repositories/get_games_repository_imp.dart';
 import 'package:game_catalog/screens/home/bloc/home_controller.dart';
 import 'package:game_catalog/screens/home/bloc/home_page_bloc.dart';
@@ -43,6 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
             return Text('Games Catalog ${bloc.currentGame}');
           },
         ),
+        actions: [
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: IconButton(
+                tooltip: 'Altera Tema',
+                onPressed: () => ThemeConfig.i.changeTheme(),
+                icon: const Icon(Icons.account_box_outlined)),
+          )
+        ],
         //title: Text('Games Catalog'),
       ),
       body: SingleChildScrollView(
@@ -119,13 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await controller.getGames();
-        },
-        tooltip: 'action',
-        child: const Icon(Icons.add),
       ),
     );
   }
